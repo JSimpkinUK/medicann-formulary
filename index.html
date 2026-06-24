@@ -552,7 +552,28 @@ select:focus{
 }
 
 .small-btn,
+.small-btn.green{
+  flex:1;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:8px 9px;
+  background:var(--panel-2);
+  color:var(--text);
+  cursor:pointer;
+  font-size:11.5px;
+  font-weight:700;
+  line-height:1.2;
+  text-align:center;
+  text-decoration:none;
+}
+
 .small-btn:hover,
+.small-btn.green:hover{
+  border-color:rgba(255,255,255,.18);
+  background:rgba(255,255,255,.07);
+  color:#fff;
+}
+
 .empty{
   display:none;
   border:1px dashed var(--border);
@@ -774,21 +795,6 @@ input[type="search"]::-webkit-search-cancel-button:hover{
   .text-logo .brand-formulary{
     font-size:clamp(11px, 3.45vw, 15px);
   }
-}
-
-
-/* Final product card action button styling */
-.card-actions{
-  display:flex;
-  gap:5px;
-  margin-top:7px;
-}
-
-.card-actions .small-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:34px;
 }
 
 </style>
@@ -1441,7 +1447,7 @@ function productCard(product, index){
         </div>
 
         <div class="card-actions">
-          ${product.medbud ? `<a class="small-btn" href="${escapeHtml(product.medbud)}" target="_blank" rel="noopener">MedBud Database</a>` : `<button class="small-btn" type="button" data-details="${index}">MedBud Database</button>`}
+          ${medbudButton}
           <button class="small-btn" type="button" data-details="${index}">View Details</button>
         </div>
       </div>
