@@ -777,20 +777,18 @@ input[type="search"]::-webkit-search-cancel-button:hover{
 }
 
 
-/* Final text logo sizing */
-.text-logo{
-  white-space:nowrap;
+/* Final product card action button styling */
+.card-actions{
+  display:flex;
+  gap:5px;
+  margin-top:7px;
 }
 
-.text-logo .brand-green,
-.text-logo .brand-formulary{
-  font-size:clamp(16px,2.75vw,32px);
-}
-@media(max-width:720px){
-  .text-logo .brand-green,
-  .text-logo .brand-formulary{
-    font-size:clamp(11px,3.45vw,15px);
-  }
+.card-actions .small-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:34px;
 }
 
 </style>
@@ -1165,6 +1163,8 @@ function barWidth(value, product){
 }
 
 
+
+
 const standardSortOptions = [
   ["brand","Brand A-Z"],
   ["product","Product A-Z"],
@@ -1224,6 +1224,9 @@ const internalSortOptions = [
   ["thcHigh","THC: High to Low"],
   ["thcLow","THC: Low to High"]
 ];
+
+
+
 
 
 function isVapesFormat(format){
@@ -1438,7 +1441,7 @@ function productCard(product, index){
         </div>
 
         <div class="card-actions">
-          ${medbudButton}
+          ${product.medbud ? `<a class="small-btn" href="${escapeHtml(product.medbud)}" target="_blank" rel="noopener">MedBud Database</a>` : `<button class="small-btn" type="button" data-details="${index}">MedBud Database</button>`}
           <button class="small-btn" type="button" data-details="${index}">View Details</button>
         </div>
       </div>
