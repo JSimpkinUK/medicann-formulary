@@ -797,6 +797,40 @@ input[type="search"]::-webkit-search-cancel-button:hover{
   }
 }
 
+
+/* Mobile drawer safe-area fix */
+.drawer{
+  height:100dvh;
+  max-height:100dvh;
+}
+
+.drawer-body{
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px));
+  scroll-padding-bottom:calc(104px + env(safe-area-inset-bottom, 0px));
+}
+
+@supports not (height:100dvh){
+  .drawer{
+    height:100vh;
+    max-height:100vh;
+  }
+}
+
+@media(max-width:720px){
+  .drawer{
+    width:100vw;
+    max-width:100vw;
+    height:100dvh;
+    max-height:100dvh;
+  }
+
+  .drawer-body{
+    padding-bottom:calc(110px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 </style>
 </head>
 
