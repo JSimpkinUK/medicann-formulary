@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TheGreenAvenger Medicann Formulary</title>
+
+<style>
+:root{
+  --bg:#0c1016;
+  --panel:#121821;
+  --panel-2:#19212c;
+  --border:#2a3646;
+  --text:#f5f7fb;
+  --muted:#a8b3c4;
+  --green:#55ff8a;
+  --green-soft:rgba(85,255,138,.12);
+  --amber:#ffc857;
+  --shadow:0 14px 34px rgba(0,0,0,.32);
+}
+
+*{box-sizing:border-box}
+
+html,
+body,
+button,
+input,
+select,
+textarea{
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(85,255,138,.06),transparent 32%),
+    radial-gradient(circle at top right,rgba(69,114,255,.055),transparent 28%),
+    var(--bg);
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  border-bottom:1px solid var(--border);
+  background:rgba(12,16,22,.94);
+  backdrop-filter:blur(14px);
+}
+
+.header-inner,
+.navbar,
+.status-bar,
+.catalogue{
+  width:100%;
+  max-width:1880px;
+  margin:0 auto;
+}
+
+.header-inner{
+  padding:14px 18px;
+}
+
+.logo-wrap{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:11px;
+}
+
+.text-logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:nowrap;
+  gap:7px;
+  width:100%;
+  max-width:100%;
+  min-height:46px;
+  padding:4px 6px;
+  overflow:hidden;
+  white-space:nowrap;
+  line-height:1;
+  text-align:center;
+  letter-spacing:-.04em;
+  font-weight:950;
+  font-style:italic;
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.52),
+    0 0 14px rgba(24,122,46,.22),
+    0 0 26px rgba(24,122,46,.12);
+}
+
+.brand-green,
+.brand-formulary{
+  display:inline-block;
+  flex:0 1 auto;
+  min-width:0;
+  color:#fff;
+  overflow:visible;
+  white-space:nowrap;
+  text-overflow:clip;
+  -webkit-text-stroke:1px rgba(24,122,46,.94);
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.52),
+    0 0 8px rgba(24,122,46,.30),
+    0 0 18px rgba(24,122,46,.22),
+    0 0 28px rgba(24,122,46,.14);
+}
+
+.brand-green{
+  font-size:clamp(18px,3.2vw,40px);
+}
+
+.brand-formulary{
+  font-size:clamp(15px,2.7vw,32px);
+}
+
+.search-row{
+  display:grid;
+  grid-template-columns:minmax(240px,1fr) 150px 150px 150px 210px;
+  gap:10px;
+}
+
+.search-box{
+  position:relative;
+}
+
+.search-box span{
+  position:absolute;
+  top:50%;
+  left:12px;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:13px;
+}
+
+input,
+select{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:10px 12px;
+  outline:none;
+  background:var(--panel-2);
+  color:var(--text);
+  font-size:13px;
+}
+
+.search-box input{
+  padding-left:35px;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px var(--green-soft);
+}
+
+.header.filters-hidden{
+  padding-bottom:14px;
+}
+
+.header.filters-hidden .search-row{
+  display:none;
+}
+
+.navbar{
+  padding:10px 18px 0;
+}
+
+.nav-tabs{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:2px;
+}
+
+.nav-tab{
+  flex:0 0 auto;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:9px 13px;
+  background:var(--panel-2);
+  color:#cbd5e1;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.2;
+  white-space:nowrap;
+  transition:.18s ease;
+}
+
+.nav-tab:hover{
+  border-color:rgba(85,255,138,.55);
+  color:#fff;
+}
+
+.nav-tab.active{
+  border-color:var(--green);
+  background:var(--green);
+  color:#06120a;
+}
+
+.nav-hide-button{
+  width:108px;
+  min-width:108px;
+  height:34px;
+  padding:0 10px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-hide-button.is-collapsed{
+  border-color:rgba(85,255,138,.58);
+  background:rgba(85,255,138,.13);
+  color:var(--green);
+}
+
+.thc-filter{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:8px 10px;
+  background:var(--panel-2);
+  color:var(--text);
+}
+
+.thc-filter label{
+  color:#aeb8c7;
+  font-size:11px;
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.thc-filter input[type="range"]{
+  padding:0;
+  border:0;
+  background:transparent;
+  accent-color:var(--green);
+  cursor:pointer;
+}
+
+.thc-filter span{
+  min-width:38px;
+  color:var(--green);
+  font-size:12px;
+  font-weight:600;
+  text-align:right;
+}
+
+.status-bar{
+  padding:12px 18px 0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.catalogue{
+  padding:14px 18px 34px;
+}
+
+.board{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.card{
+  position:relative;
+  display:block;
+  min-height:188px;
+  padding:14px;
+  overflow:visible;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.008)),
+    var(--panel);
+  transition:.18s ease;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top right,rgba(85,255,138,.06),transparent 44%);
+  pointer-events:none;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(85,255,138,.65);
+  box-shadow:var(--shadow);
+}
+
+.card-main{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:7px;
+}
+
+.brand{
+  color:#aeb8c7;
+  font-size:11px;
+  font-weight:700;
+  line-height:1.25;
+  text-transform:uppercase;
+  letter-spacing:.045em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.product{
+  min-height:34px;
+  margin:5px 0 4px;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  color:#fff;
+  font-size:17px;
+  font-weight:750;
+  line-height:1.22;
+  letter-spacing:-.012em;
+}
+
+.card-product-pills{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  flex-wrap:nowrap;
+  gap:4px;
+  min-width:0;
+  margin:0 0 10px;
+  padding:4px 0 2px;
+  overflow:visible;
+  white-space:nowrap;
+  line-height:1;
+}
+
+.badge{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:6px 10px;
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  font-size:11px;
+  font-weight:700;
+  line-height:1.15;
+  letter-spacing:0;
+  white-space:nowrap;
+  overflow:visible;
+}
+
+.badge.stock-pill.stock-in{
+  color:#7dffa6;
+  background:rgba(85,255,138,.13);
+  border-color:rgba(85,255,138,.35);
+}
+
+.badge.stock-pill.stock-low{
+  color:#ffd08a;
+  background:rgba(255,165,64,.14);
+  border-color:rgba(255,165,64,.38);
+}
+
+.badge.stock-pill.stock-out{
+  color:#ff9a9a;
+  background:rgba(255,82,82,.14);
+  border-color:rgba(255,82,82,.38);
+}
+
+.badge.stock-pill.stock-unknown{
+  color:#cbd5e1;
+  background:rgba(148,163,184,.14);
+  border-color:rgba(148,163,184,.28);
+}
+
+.badge.irr{
+  color:var(--amber);
+}
+
+.badge.product-format-pill{
+  color:#b8f7ff;
+  background:rgba(56,189,248,.14);
+  border-color:rgba(56,189,248,.36);
+}
+
+.badge.carrier-oil-pill{
+  color:#d8c5ff;
+  background:rgba(139,92,246,.15);
+  border-color:rgba(139,92,246,.38);
+}
+
+.badge.discounted{
+  color:#f8e27a;
+  background:rgba(154,113,10,.20);
+  border-color:rgba(248,210,75,.42);
+}
+
+.badge.new-pill{
+  color:#bfffd2;
+  background:rgba(52,211,153,.15);
+  border-color:rgba(52,211,153,.42);
+}
+
+.badge.group.indica{
+  color:#8db4ff;
+  background:rgba(28,93,255,.14);
+  border-color:rgba(65,125,255,.35);
+}
+
+.badge.group.sativa{
+  color:#ffbd72;
+  background:rgba(255,159,36,.14);
+  border-color:rgba(255,159,36,.36);
+}
+
+.badge.group.hybrid{
+  color:#ff87c7;
+  background:rgba(176,24,102,.18);
+  border-color:rgba(176,24,102,.42);
+}
+
+.badge.group.balanced,
+.badge.group.other{
+  color:#cbd5e1;
+  background:rgba(148,163,184,.14);
+  border-color:rgba(148,163,184,.28);
+}
+
+.cannabinoid-bars{
+  display:grid;
+  gap:7px;
+  margin:0 0 9px;
+}
+
+.cannabinoid-bar{
+  display:grid;
+  gap:4px;
+}
+
+.cannabinoid-bar-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
+}
+
+.cannabinoid-bar-label,
+.cannabinoid-bar-value{
+  font-size:11px;
+  font-weight:600;
+  line-height:1.15;
+}
+
+.cannabinoid-bar-label{
+  color:#dfe8f1;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+
+.cannabinoid-bar-value{
+  color:#dbe5ef;
+}
+
+.cannabinoid-bar-track{
+  width:100%;
+  height:8px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+}
+
+.cannabinoid-bar-fill{
+  height:100%;
+  border-radius:999px;
+}
+
+.cannabinoid-bar-fill.thc{
+  background:linear-gradient(90deg,#0f6b31,#179742);
+}
+
+.cannabinoid-bar-fill.cbd{
+  background:linear-gradient(90deg,#6fef9d,#a6ffbf);
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:5px;
+  margin-top:auto;
+}
+
+.meta-item,
+.drawer-field{
+  min-width:0;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;
+  padding:7px;
+  background:rgba(31,41,54,.92);
+}
+
+.label{
+  margin-bottom:3px;
+  color:#9faabd;
+  font-size:9.5px;
+  font-weight:650;
+  line-height:1.15;
+  text-transform:uppercase;
+  letter-spacing:.055em;
+}
+
+.value{
+  overflow:hidden;
+  color:#f4f7fb;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.22;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.card-actions{
+  display:flex;
+  gap:5px;
+  margin-top:7px;
+}
+
+.small-btn,
+.small-btn:hover,
+.empty{
+  display:none;
+  border:1px dashed var(--border);
+  border-radius:16px;
+  padding:36px;
+  background:rgba(255,255,255,.02);
+  color:var(--muted);
+  text-align:center;
+}
+
+.drawer-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  opacity:0;
+  pointer-events:none;
+  background:rgba(0,0,0,.52);
+  transition:.2s ease;
+}
+
+.drawer-backdrop.open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  z-index:90;
+  width:min(520px,100vw);
+  height:100vh;
+  overflow:auto;
+  border-left:1px solid var(--border);
+  background:#101620;
+  box-shadow:-20px 0 60px rgba(0,0,0,.45);
+  transform:translateX(100%);
+  transition:.24s ease;
+}
+
+.drawer.open{
+  transform:translateX(0);
+}
+
+.drawer-header{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  padding:18px;
+  border-bottom:1px solid var(--border);
+}
+
+.drawer-header h2{
+  margin:0;
+  font-size:24px;
+  line-height:1.1;
+  letter-spacing:-.03em;
+}
+
+.close{
+  width:40px;
+  height:40px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--panel-2);
+  color:#fff;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:400;
+}
+
+.drawer-body{
+  padding:18px;
+}
+
+.drawer-body > .cannabinoid-bars{
+  margin:0 0 14px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;
+  padding:12px;
+  background:rgba(31,41,54,.72);
+}
+
+.drawer-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.drawer-field{
+  border-color:var(--border);
+  border-radius:11px;
+  padding:10px;
+  background:var(--panel);
+}
+
+.drawer-field.full{
+  grid-column:1/-1;
+}
+
+.drawer-field .value{
+  overflow:visible;
+  white-space:normal;
+  text-overflow:clip;
+}
+
+.drawer-link{
+  color:var(--green);
+}
+
+.back-to-top{
+  position:fixed;
+  right:14px;
+  bottom:14px;
+  z-index:80;
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  border:1px solid rgba(85,255,138,.34);
+  border-radius:999px;
+  background:linear-gradient(135deg,rgba(85,255,138,.95),rgba(25,220,105,.9));
+  color:#06110a;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:950;
+  line-height:1;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(12px) scale(.96);
+  transition:opacity .2s ease,transform .2s ease,box-shadow .2s ease;
+  box-shadow:0 10px 28px rgba(0,0,0,.34),0 0 0 4px rgba(85,255,138,.07);
+}
+
+.back-to-top.visible{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0) scale(1);
+}
+
+.back-to-top:hover{
+  box-shadow:0 12px 32px rgba(0,0,0,.40),0 0 0 5px rgba(85,255,138,.10);
+}
+
+.back-to-top:focus{
+  outline:2px solid rgba(255,255,255,.86);
+  outline-offset:3px;
+}
+
+@media(max-width:1120px){
+  .board{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:900px){
+  .search-row{grid-template-columns:1fr}
+  .board{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:720px){
+  .text-logo{
+    gap:4px;
+    min-height:38px;
+    padding:4px 2px;
+  }
+
+  .brand-green{
+    font-size:clamp(13px,4.1vw,18px);
+  }
+
+  .brand-formulary{
+    font-size:clamp(11px,3.5vw,15px);
+  }
+
+  .nav-hide-button{
+    width:102px;
+    min-width:102px;
+    height:32px;
+    padding:0 8px;
+    font-size:10px;
+  }
+}
+
+@media(max-width:620px){
+  .board{grid-template-columns:1fr}
+}
+
+@media(max-width:430px){
+  .drawer-grid{grid-template-columns:1fr}
+}
+
+/* Green clear X in search bar */
+input[type="search"]::-webkit-search-cancel-button{
+  -webkit-appearance:none;
+  appearance:none;
+  width:15px;
+  height:15px;
+  border-radius:999px;
+  cursor:pointer;
+  background:
+    linear-gradient(45deg, transparent 43%, #06110a 44%, #06110a 56%, transparent 57%),
+    linear-gradient(-45deg, transparent 43%, #06110a 44%, #06110a 56%, transparent 57%),
+    linear-gradient(135deg,rgba(85,255,138,.95),rgba(25,220,105,.9));
+  box-shadow:0 0 0 3px rgba(85,255,138,.08);
+}
+
+input[type="search"]::-webkit-search-cancel-button:hover{
+  box-shadow:0 0 0 4px rgba(85,255,138,.12);
+}
+
+
+/* Text logo: same font size for both parts */
+.text-logo .brand-green,
+.text-logo .brand-formulary{
+  font-size:clamp(16px, 2.75vw, 32px);
+}
+
+@media(max-width:720px){
+  .text-logo .brand-green,
+  .text-logo .brand-formulary{
+    font-size:clamp(11px, 3.45vw, 15px);
+  }
+}
+
+
+/* Final text logo sizing */
+.text-logo{
+  white-space:nowrap;
+}
+
+.text-logo .brand-green,
+.text-logo .brand-formulary{
+  font-size:clamp(16px,2.75vw,32px);
+}
+@media(max-width:720px){
+  .text-logo .brand-green,
+  .text-logo .brand-formulary{
+    font-size:clamp(11px,3.45vw,15px);
+  }
+}
+
+</style>
+</head>
+
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <div class="text-logo">
+        <span class="brand-green">TheGreenAvenger</span>
+        <span class="brand-formulary">Medicann Formulary</span>
+      </div>
+    </div>
+
+    <div class="search-row">
+      <div class="search-box">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="Search brand, product, terpene, THC, CBD, origin...">
+      </div>
+
+      <select id="sortSelect">
+        <option value="brand">Sort: Brand</option>
+        <option value="product">Sort: Product</option>
+        <option value="priceLow">Total Price: Low to High</option>
+        <option value="priceHigh">Total Price: High to Low</option>
+        <option value="thcHigh">THC: High to Low</option>
+        <option value="thcLow">THC: Low to High</option>
+        <option value="nonIrradiated">Non-Irradiated</option>
+        <option value="irradiated">Irradiated</option>
+      </select>
+
+      <select id="groupSelect">
+        <option value="">All Groups</option>
+        <option value="__new">New</option>
+        <option value="__discounted">Discounted</option>
+        <option value="Indica">Indica</option>
+        <option value="Indica Hybrid">Indica Hybrid</option>
+        <option value="Sativa">Sativa</option>
+        <option value="Sativa Hybrid">Sativa Hybrid</option>
+        <option value="Hybrid">Hybrid</option>
+        <option value="Balanced">Balanced</option>
+      </select>
+
+      <select id="stockSelect">
+        <option value="Available" selected>Available Stock</option>
+        <option value="Out of Stock">Out of Stock</option>
+        <option value="">All Stock</option>
+      </select>
+
+      <div class="thc-filter">
+        <label for="maxThcInput">Max THC</label>
+        <input id="maxThcInput" type="range" min="0" max="100" value="100" step="1">
+        <span id="maxThcValue">100%</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar" aria-label="Product formats">
+  <div class="nav-tabs" id="formatTabs">
+    <button class="nav-tab active" type="button" data-format="Flower">Flower</button>
+    <button class="nav-tab" type="button" data-format="Vapes">Vapes</button>
+    <button class="nav-tab" type="button" data-format="Oils">Oils</button>
+    <button class="nav-tab" type="button" data-format="Extracts">Extracts</button>
+    <button class="nav-tab" type="button" data-format="Pastilles">Pastilles</button>
+    <button class="nav-tab" type="button" data-format="Internal">Internal</button>
+    <button class="nav-tab nav-hide-button" id="hideHeaderSection" type="button" aria-label="Hide filters" aria-expanded="true">Hide Filters</button>
+  </div>
+</nav>
+
+<section class="status-bar">
+  <div id="resultCount">Loading products.csv...</div>
+</section>
+
+<main class="catalogue">
+  <div class="empty" id="emptyState">
+    No products found on this page. Try another section, clear the search and change the filters.
+  </div>
+  <section class="board" id="board"></section>
+</main>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">↑</button>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+<aside class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div>
+      <div class="brand" id="drawerBrand">Brand</div>
+      <h2 id="drawerTitle">Product</h2>
+    </div>
+    <button class="close" id="closeDrawer" type="button">×</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</aside>
+
+<script>
+let products = [];
+let currentFormat = "Flower";
+
+const fallbackProducts = [
+  {
+    brand:"Green Karat",
+    cultivator:"Green Karat",
+    product:"Pave S1",
+    format:"Flower",
+    price:"£85.00",
+    thc:"30%",
+    cbd:"<1%",
+    irradiation:"Non-Irradiated",
+    group:"Hybrid",
+    discounted:"",
+    coo:"Canada",
+    terpenes:"Myrcene, Limonene, Caryophyllene",
+    pack:"10g",
+    stock:"In Stock",
+    medbud:"https://medbud.wiki/"
+  },
+  {
+    brand:"Aurora",
+    cultivator:"Aurora",
+    product:"Farm Gas",
+    format:"Flower",
+    price:"£80.00",
+    thc:"29%",
+    cbd:"<1%",
+    irradiation:"Gamma",
+    group:"Indica",
+    discounted:"",
+    coo:"Canada",
+    terpenes:"Myrcene, Caryophyllene, Limonene",
+    pack:"10g",
+    stock:"In Stock",
+    medbud:"https://medbud.wiki/"
+  }
+];
+
+const board = document.getElementById("board");
+const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
+const groupSelect = document.getElementById("groupSelect");
+const stockSelect = document.getElementById("stockSelect");
+const maxThcInput = document.getElementById("maxThcInput");
+const maxThcValue = document.getElementById("maxThcValue");
+const resultCount = document.getElementById("resultCount");
+const emptyState = document.getElementById("emptyState");
+const drawer = document.getElementById("drawer");
+const drawerBackdrop = document.getElementById("drawerBackdrop");
+const drawerBody = document.getElementById("drawerBody");
+const drawerBrand = document.getElementById("drawerBrand");
+const drawerTitle = document.getElementById("drawerTitle");
+const backToTop = document.getElementById("backToTop");
+const headerSection = document.querySelector(".header");
+const hideHeaderSection = document.getElementById("hideHeaderSection");
+
+stockSelect.value = "Available";
+
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[char]));
+}
+
+function normaliseSearchText(value){
+  let text = String(value ?? "")
+    .toLowerCase()
+    .replace(/[α]/g,"alpha")
+    .replace(/[β]/g,"beta")
+    .replace(/[γ]/g,"gamma")
+    .replace(/[‐‑‒–—−-]/g," ")
+    .replace(/[^a-z0-9%£.]+/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+
+  const corrections = {
+    mycrene:"myrcene",
+    mycene:"myrcene",
+    terpinoline:"terpinolene",
+    caryophylene:"caryophyllene",
+    caryophylline:"caryophyllene",
+    humelene:"humulene",
+    pinine:"pinene"
+  };
+
+  Object.entries(corrections).forEach(([wrong,right]) => {
+    text = text.replace(new RegExp("\\b" + wrong + "\\b","g"), right);
+  });
+
+  return text;
+}
+
+function numberFrom(value){
+  const match = String(value ?? "").replace(",",".").match(/-?\d+(\.\d+)?/);
+  return match ? Number(match[0]) : 0;
+}
+
+function normaliseKey(key){
+  return String(key || "")
+    .toLowerCase()
+    .replace(/\s+/g,"")
+    .replace(/[._\-•:/()]/g,"");
+}
+
+function pick(row, keys){
+  const lookup = {};
+  Object.keys(row).forEach(key => {
+    lookup[normaliseKey(key)] = row[key];
+  });
+
+  for(const key of keys){
+    const value = lookup[normaliseKey(key)];
+    if(value !== undefined && value !== null && value !== "") return value;
+  }
+
+  return "";
+}
+
+function parseCsv(text){
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
+
+  for(let i = 0; i < text.length; i++){
+    const char = text[i];
+    const next = text[i + 1];
+
+    if(char === '"' && inQuotes && next === '"'){
+      cell += '"';
+      i++;
+    } else if(char === '"'){
+      inQuotes = !inQuotes;
+    } else if(char === "," && !inQuotes){
+      row.push(cell);
+      cell = "";
+    } else if((char === "\n" || char === "\r") && !inQuotes){
+      if(char === "\r" && next === "\n") i++;
+      row.push(cell);
+      if(row.some(value => String(value).trim() !== "")) rows.push(row);
+      row = [];
+      cell = "";
+    } else {
+      cell += char;
+    }
+  }
+
+  row.push(cell);
+  if(row.some(value => String(value).trim() !== "")) rows.push(row);
+
+  const headers = rows.shift() || [];
+  return rows.map(values => {
+    const item = {};
+    headers.forEach((header,index) => {
+      item[header.trim()] = (values[index] || "").trim();
+    });
+    return item;
+  });
+}
+
+function rowsToProducts(rows){
+  return rows.map(row => ({
+    brand:pick(row,["Brand","Manufacturer","Producer"]),
+    cultivator:pick(row,["Cultivator","Grower","Producer","Manufacturer"]),
+    product:pick(row,["Product","Name","Strain","Medication","Flower"]),
+    format:pick(row,["Format","Page","Section","Product Type","Form","Form Factor"]) || "Flower",
+    price:pick(row,["Total Price","Total","Price","Cost","£/g","Price/g","Price Per Gram","PPG"]),
+    thc:pick(row,["THC","THC %","THC•CBD","THC CBD","Strength THC"]),
+    cbd:pick(row,["CBD","CBD %","CBD Content","Strength CBD"]),
+    irradiation:pick(row,["Irradiation","Irradiated","Irradiation Type","Treatment"]),
+    group:pick(row,["Group","Type","Category","Strain Type"]),
+    discounted:pick(row,["Discounted","Discount","Sale","Offer","Promo","Promotion"]),
+    isNew:pick(row,["New","New Product","Recently Added","Newly Added","New Arrival"]),
+    coo:pick(row,["C.O.O","COO","Country of Origin","Origin","Country"]),
+    terpenes:pick(row,["Terpenes","Terpene","Terpene Profile","Dominant Terpenes","Primary Terpenes","Main Terpenes","Terpene Names","Terps","Total Terpenes","Terpene %"]),
+    pack:pick(row,["Pack","Pack Size","Size","Quantity","Grams"]),
+    stock:pick(row,["Stock","Status","Availability"]),
+    medbud:pick(row,["MedBud","MedBud Link","URL","Link"])
+  })).filter(product => product.brand || product.product);
+}
+
+function searchable(product){
+  return normaliseSearchText([
+    product.brand,
+    product.cultivator,
+    product.product,
+    product.format,
+    product.price,
+    product.thc,
+    product.cbd,
+    product.irradiation,
+    product.group,
+    product.coo,
+    product.terpenes,
+    product.pack,
+    product.stock,
+    product.discounted,
+    product.isNew
+  ].join(" "));
+}
+
+function stockClass(value){
+  const stock = String(value || "").trim().toLowerCase();
+
+  if(stock === "in stock") return "stock-in";
+  if(stock === "low stock") return "stock-low";
+  if(stock === "out of stock") return "stock-out";
+
+  return "stock-unknown";
+}
+
+function groupClass(group){
+  const value = String(group || "").trim().toLowerCase();
+
+  if(value === "indica" || value === "indica hybrid") return "indica";
+  if(value === "sativa" || value === "sativa hybrid") return "sativa";
+  if(value === "hybrid") return "hybrid";
+  if(value === "balanced") return "balanced";
+
+  return "other";
+}
+
+
+function hasNew(value){
+  const text = String(value || "").trim().toLowerCase();
+  if(!text) return false;
+  return !["no","n","false","0","none","standard","regular"].includes(text);
+}
+
+function newLabel(value){
+  const raw = String(value || "").trim();
+  const lower = raw.toLowerCase();
+
+  if(!raw || ["yes","y","true","1","new"].includes(lower)){
+    return "New";
+  }
+
+  return raw;
+}
+
+function hasDiscount(value){
+  const text = String(value || "").trim().toLowerCase();
+
+  if(!text) return false;
+
+  return !["no","n","false","0","none","standard","regular","full price","full-price"].includes(text);
+}
+
+function discountLabel(value){
+  const raw = String(value || "").trim();
+  const lower = raw.toLowerCase();
+
+  if(!raw || ["yes","y","true","1","discount","discounted","sale","offer","promo","promotion"].includes(lower)){
+    return "Discounted";
+  }
+
+  return raw;
+}
+
+
+function barMax(product){
+  return String(product?.format || "").trim().toLowerCase() === "vapes" ? 1000 : 100;
+}
+
+function barWidth(value, product){
+  const max = barMax(product);
+  return Math.max(0, Math.min(100, (numberFrom(value) / max) * 100));
+}
+
+
+const standardSortOptions = [
+  ["brand","Brand A-Z"],
+  ["product","Product A-Z"],
+  ["priceLow","Total Price: Low to High"],
+  ["priceHigh","Total Price: High to Low"],
+  ["thcHigh","THC: High to Low"],
+  ["thcLow","THC: Low to High"],
+  ["nonIrradiated","Non-Irradiated"],
+  ["irradiated","Irradiated"]
+];
+
+const vapeSortOptions = [
+  ["brand","Brand A-Z"],
+  ["product","Product A-Z"],
+  ["priceLow","Total Price: Low to High"],
+  ["priceHigh","Total Price: High to Low"],
+  ["thcHigh","THC: High to Low"],
+  ["thcLow","THC: Low to High"],
+  ["distillate","Distillate"],
+  ["hashRosin","Hash Rosin"],
+  ["resin","Resin"],
+  ["rosin","Rosin"]
+];
+
+const oilsSortOptions = [
+  ["brand","Brand A-Z"],
+  ["product","Product A-Z"],
+  ["priceLow","Total Price: Low to High"],
+  ["priceHigh","Total Price: High to Low"],
+  ["thcHigh","THC: High to Low"],
+  ["thcLow","THC: Low to High"]
+];
+
+const extractsSortOptions = [
+  ["brand","Brand A-Z"],
+  ["product","Product A-Z"],
+  ["priceLow","Total Price: Low to High"],
+  ["priceHigh","Total Price: High to Low"],
+  ["thcHigh","THC: High to Low"],
+  ["thcLow","THC: Low to High"]
+];
+
+const pastillesSortOptions = [
+  ["brand","Brand A-Z"],
+  ["product","Product A-Z"],
+  ["priceLow","Total Price: Low to High"],
+  ["priceHigh","Total Price: High to Low"],
+  ["thcHigh","THC: High to Low"],
+  ["thcLow","THC: Low to High"]
+];
+
+const internalSortOptions = [
+  ["brand","Brand A-Z"],
+  ["product","Product A-Z"],
+  ["priceLow","Total Price: Low to High"],
+  ["priceHigh","Total Price: High to Low"],
+  ["thcHigh","THC: High to Low"],
+  ["thcLow","THC: Low to High"]
+];
+
+
+function isVapesFormat(format){
+  return String(format || "").trim().toLowerCase() === "vapes";
+}
+
+function isOilsFormat(format){
+  return String(format || "").trim().toLowerCase() === "oils";
+}
+
+function isExtractsFormat(format){
+  return String(format || "").trim().toLowerCase() === "extracts";
+}
+
+function isPastillesFormat(format){
+  return String(format || "").trim().toLowerCase() === "pastilles";
+}
+
+function isInternalFormat(format){
+  return String(format || "").trim().toLowerCase() === "internal";
+}
+
+function updateSortOptionsForFormat(){
+  const currentValue = sortSelect.value;
+  const options = isVapesFormat(currentFormat)
+    ? vapeSortOptions
+    : isOilsFormat(currentFormat)
+      ? oilsSortOptions
+      : isExtractsFormat(currentFormat)
+        ? extractsSortOptions
+        : isPastillesFormat(currentFormat)
+          ? pastillesSortOptions
+          : isInternalFormat(currentFormat)
+            ? internalSortOptions
+            : standardSortOptions;
+  const allowedValues = options.map(option => option[0]);
+
+  sortSelect.innerHTML = options
+    .map(([value,label]) => `<option value="${value}">${label}</option>`)
+    .join("");
+
+  sortSelect.value = allowedValues.includes(currentValue) ? currentValue : "brand";
+}
+
+function vapeProductFormatMatches(value, filter){
+  const text = String(value || "").trim().toLowerCase().replace(/[‐‑‒–—−-]/g," ");
+
+  if(filter === "distillate") return text.includes("distillate");
+  if(filter === "hashRosin") return text.includes("hash rosin") || text.includes("hashrosin");
+  if(filter === "resin") return text.includes("resin");
+  if(filter === "rosin") return text.includes("rosin") && !text.includes("hash rosin") && !text.includes("hashrosin");
+
+  return true;
+}
+
+function isNonIrradiated(value){
+  const text = String(value || "").toLowerCase().replace(/[‐‑‒–—−-]/g," ");
+  return text.includes("non irradiated") || text.includes("nonirradiated");
+}
+
+function isIrradiated(value){
+  const text = String(value || "").trim().toLowerCase();
+  if(!text || text === "unknown" || text === "—") return false;
+  return !isNonIrradiated(text);
+}
+
+async function loadCsv(){
+  resultCount.textContent = "Loading products.csv...";
+
+  try{
+    const response = await fetch("products.csv?cache=" + Date.now(), {cache:"no-store"});
+    if(!response.ok) throw new Error("Could not load products.csv");
+
+    const rows = parseCsv(await response.text());
+    const imported = rowsToProducts(rows);
+
+    if(!imported.length) throw new Error("No product rows found in products.csv");
+
+    products = imported;
+    render();
+  } catch(error){
+    console.warn(error);
+    products = fallbackProducts;
+    render();
+    resultCount.textContent = `Showing ${products.length} demo products — products.csv could not be loaded. Keep products.csv beside index.html when hosted.`;
+  }
+}
+
+
+function maxThcLimitForFormat(format){
+  return String(format || "").trim().toLowerCase() === "vapes" ? 1000 : 100;
+}
+
+function updateMaxThcSliderForFormat(options = {}){
+  const max = maxThcLimitForFormat(currentFormat);
+  const reset = Boolean(options.reset);
+
+  maxThcInput.max = String(max);
+
+  if(reset || Number(maxThcInput.value || 0) > max){
+    maxThcInput.value = String(max);
+  }
+
+  maxThcValue.textContent = maxThcInput.value + "%";
+}
+
+function getFilteredProducts(){
+  const query = normaliseSearchText(searchInput.value);
+  const group = groupSelect.value;
+  const stock = stockSelect.value;
+  const sort = sortSelect.value;
+  const maxThc = Number(maxThcInput.value || 100);
+
+  return products
+    .filter(product => {
+      const productFormat = String(product.format || "Flower").trim().toLowerCase();
+      const productStock = String(product.stock || "").toLowerCase();
+
+      return productFormat === currentFormat.toLowerCase()
+        && (!query || searchable(product).includes(query))
+        && (!group
+          || (group === "__new" && hasNew(product.isNew))
+          || (group === "__discounted" && hasDiscount(product.discounted))
+          || (!group.startsWith("__") && String(product.group).toLowerCase() === group.toLowerCase()))
+        && (!stock
+          || (stock === "Available" && ["in stock","low stock"].includes(productStock))
+          || productStock === stock.toLowerCase())
+        && (!isVapesFormat(currentFormat) || !["distillate","hashRosin","resin","rosin"].includes(sort) || vapeProductFormatMatches(product.irradiation, sort))
+        && (isVapesFormat(currentFormat) || sort !== "nonIrradiated" || isNonIrradiated(product.irradiation))
+        && (isVapesFormat(currentFormat) || sort !== "irradiated" || isIrradiated(product.irradiation))
+        && numberFrom(product.thc) <= maxThc;
+    })
+    .sort((a,b) => {
+      const sort = sortSelect.value;
+
+      if(sort === "brand") return String(a.brand).localeCompare(String(b.brand));
+      if(sort === "product") return String(a.product).localeCompare(String(b.product));
+      if(sort === "priceLow") return numberFrom(a.price) - numberFrom(b.price);
+      if(sort === "priceHigh") return numberFrom(b.price) - numberFrom(a.price);
+      if(sort === "thcHigh") return numberFrom(b.thc) - numberFrom(a.thc);
+      if(sort === "thcLow") return numberFrom(a.thc) - numberFrom(b.thc);
+      if(["nonIrradiated","irradiated","distillate","hashRosin","resin","rosin"].includes(sort)) return String(a.brand).localeCompare(String(b.brand));
+
+      return 0;
+    });
+}
+
+function productCard(product, index){
+  const medbudButton = product.medbud
+    ? `<a class="small-btn" href="${escapeHtml(product.medbud)}" target="_blank" rel="noopener">MedBud Database</a>`
+    : `<button class="small-btn" type="button" data-details="${index}">MedBud Database</button>`;
+
+  return `
+    <article class="card">
+      <div class="card-main">
+        <div class="card-top">
+          <div class="brand">${escapeHtml(product.brand || "Unknown Brand")}</div>
+        </div>
+
+        <div class="product">${escapeHtml(product.product || "Unnamed Product")}</div>
+
+        <div class="card-product-pills">
+          <span class="badge stock-pill ${stockClass(product.stock)}">${escapeHtml(product.stock || "Catalogue")}</span>
+          ${product.group ? `<span class="badge group ${groupClass(product.group)}">${escapeHtml(product.group)}</span>` : ""}
+          ${String(product.format || "").trim().toLowerCase() === "vapes"
+            ? `<span class="badge product-format-pill">${escapeHtml(product.irradiation || "Product Format")}</span>`
+            : String(product.format || "").trim().toLowerCase() === "oils"
+              ? `<span class="badge carrier-oil-pill">${escapeHtml(product.irradiation || "Carrier Oil")}</span>`
+              : String(product.format || "").trim().toLowerCase() === "pastilles"
+                ? ""
+                : String(product.format || "").trim().toLowerCase() === "internal"
+                  ? ""
+                  : `<span class="badge irr">${escapeHtml(product.irradiation || "Unknown")}</span>`}
+          ${hasDiscount(product.discounted)
+            ? `<span class="badge discounted">${escapeHtml(discountLabel(product.discounted))}</span>`
+            : hasNew(product.isNew)
+              ? `<span class="badge new-pill">${escapeHtml(newLabel(product.isNew))}</span>`
+              : ""}
+        </div>
+
+        <div class="cannabinoid-bars">
+          <div class="cannabinoid-bar">
+            <div class="cannabinoid-bar-head">
+              <span class="cannabinoid-bar-label">THC</span>
+              <span class="cannabinoid-bar-value">${escapeHtml(product.thc || "—")}</span>
+            </div>
+            <div class="cannabinoid-bar-track">
+              <div class="cannabinoid-bar-fill thc" style="width:${barWidth(product.thc, product)}%"></div>
+            </div>
+          </div>
+
+          <div class="cannabinoid-bar">
+            <div class="cannabinoid-bar-head">
+              <span class="cannabinoid-bar-label">CBD</span>
+              <span class="cannabinoid-bar-value">${escapeHtml(product.cbd || "—")}</span>
+            </div>
+            <div class="cannabinoid-bar-track">
+              <div class="cannabinoid-bar-fill cbd" style="width:${barWidth(product.cbd, product)}%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta">
+          <div class="meta-item">
+            <div class="label">Total Price</div>
+            <div class="value">${escapeHtml(product.price || "—")}</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">C.O.O</div>
+            <div class="value">${escapeHtml(product.coo || "—")}</div>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          ${medbudButton}
+          <button class="small-btn" type="button" data-details="${index}">View Details</button>
+        </div>
+      </div>
+    </article>`;
+}
+
+function render(){
+  updateMaxThcSliderForFormat();
+  updateSortOptionsForFormat();
+  const filtered = getFilteredProducts();
+
+  board.innerHTML = filtered.map(product => productCard(product, products.indexOf(product))).join("");
+  emptyState.style.display = filtered.length ? "none" : "block";
+
+  if(!resultCount.textContent.includes("demo products")){
+    resultCount.textContent = `${currentFormat}: showing ${filtered.length} of ${products.length} products`;
+  }
+
+  document.querySelectorAll("[data-details]").forEach(button => {
+    button.addEventListener("click", () => openDrawer(products[Number(button.dataset.details)]));
+  });
+}
+
+function openDrawer(product){
+  drawerBrand.textContent = product.brand || "Unknown Brand";
+  drawerTitle.textContent = product.product || "Unnamed Product";
+
+  drawerBody.innerHTML = `
+    <div class="cannabinoid-bars">
+      <div class="cannabinoid-bar">
+        <div class="cannabinoid-bar-head">
+          <span class="cannabinoid-bar-label">THC</span>
+          <span class="cannabinoid-bar-value">${escapeHtml(product.thc || "—")}</span>
+        </div>
+        <div class="cannabinoid-bar-track">
+          <div class="cannabinoid-bar-fill thc" style="width:${barWidth(product.thc, product)}%"></div>
+        </div>
+      </div>
+
+      <div class="cannabinoid-bar">
+        <div class="cannabinoid-bar-head">
+          <span class="cannabinoid-bar-label">CBD</span>
+          <span class="cannabinoid-bar-value">${escapeHtml(product.cbd || "—")}</span>
+        </div>
+        <div class="cannabinoid-bar-track">
+          <div class="cannabinoid-bar-fill cbd" style="width:${barWidth(product.cbd, product)}%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-grid">
+      <div class="drawer-field"><div class="label">Brand</div><div class="value">${escapeHtml(product.brand || "—")}</div></div>
+      <div class="drawer-field"><div class="label">Cultivator</div><div class="value">${escapeHtml(product.cultivator || "—")}</div></div>
+      <div class="drawer-field"><div class="label">Product</div><div class="value">${escapeHtml(product.product || "—")}</div></div>
+      <div class="drawer-field"><div class="label">Format</div><div class="value">${escapeHtml(product.format || "Flower")}</div></div>
+      <div class="drawer-field"><div class="label">Total Price</div><div class="value">${escapeHtml(product.price || "—")}</div></div>
+      <div class="drawer-field"><div class="label">${String(product.format || "").trim().toLowerCase() === "oils" ? "Bottle Size" : "Pack Size"}</div><div class="value">${escapeHtml(product.pack || "—")}</div></div>
+      ${String(product.format || "").trim().toLowerCase() === "pastilles"
+        ? ""
+        : String(product.format || "").trim().toLowerCase() === "internal"
+          ? ""
+          : `<div class="drawer-field"><div class="label">${String(product.format || "").trim().toLowerCase() === "vapes" ? "Product Format" : String(product.format || "").trim().toLowerCase() === "extracts" ? "Product Format" : String(product.format || "").trim().toLowerCase() === "oils" ? "Carrier Oil" : "Irradiation"}</div><div class="value">${escapeHtml(product.irradiation || "—")}</div></div>`}
+      <div class="drawer-field"><div class="label">Group</div><div class="value">${escapeHtml(product.group || "—")}</div></div>
+      <div class="drawer-field"><div class="label">Country of Origin</div><div class="value">${escapeHtml(product.coo || "—")}</div></div>
+      <div class="drawer-field full"><div class="label">Terpenes</div><div class="value">${escapeHtml(product.terpenes || "—")}</div></div>
+      <div class="drawer-field full"><div class="label">MedBud Link</div><div class="value">${product.medbud ? `<a class="drawer-link" href="${escapeHtml(product.medbud)}" target="_blank" rel="noopener">Open MedBud</a>` : "—"}</div></div>
+    </div>
+  `;
+
+  drawer.classList.add("open");
+  drawerBackdrop.classList.add("open");
+}
+
+function closeDrawer(){
+  drawer.classList.remove("open");
+  drawerBackdrop.classList.remove("open");
+}
+
+function toggleBackToTop(){
+  backToTop.classList.toggle("visible", window.scrollY > 420);
+}
+
+function setFiltersHidden(hidden){
+  headerSection.classList.toggle("filters-hidden", hidden);
+  hideHeaderSection.classList.toggle("is-collapsed", hidden);
+  hideHeaderSection.textContent = hidden ? "Show Filters" : "Hide Filters";
+  hideHeaderSection.setAttribute("aria-label", hidden ? "Show filters" : "Hide filters");
+  hideHeaderSection.setAttribute("aria-expanded", hidden ? "false" : "true");
+}
+
+document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
+drawerBackdrop.addEventListener("click", closeDrawer);
+
+document.addEventListener("keydown", event => {
+  if(event.key === "Escape") closeDrawer();
+});
+
+searchInput.addEventListener("input", () => {
+  if(resultCount.textContent.includes("demo products")) resultCount.textContent = "";
+  render();
+});
+
+sortSelect.addEventListener("change", render);
+groupSelect.addEventListener("change", render);
+stockSelect.addEventListener("change", render);
+
+maxThcInput.addEventListener("input", () => {
+  maxThcValue.textContent = maxThcInput.value + "%";
+  render();
+});
+
+document.querySelectorAll("[data-format]").forEach(tab => {
+  tab.addEventListener("click", () => {
+    currentFormat = tab.dataset.format;
+
+    document.querySelectorAll("[data-format]").forEach(item => {
+      item.classList.toggle("active", item.dataset.format === currentFormat);
+    });
+
+    searchInput.value = "";
+    updateMaxThcSliderForFormat({reset:true});
+    render();
+  });
+});
+
+window.addEventListener("scroll", toggleBackToTop, {passive:true});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+hideHeaderSection.addEventListener("click", () => {
+  setFiltersHidden(!headerSection.classList.contains("filters-hidden"));
+});
+
+toggleBackToTop();
+updateMaxThcSliderForFormat({reset:true});
+updateSortOptionsForFormat();
+loadCsv();
+</script>
+</body>
+</html>
