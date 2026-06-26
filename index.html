@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TheGreenAvenger | Medicann Formulary</title>
+<title>TheGreenAvenger Medicann Formulary</title>
+<script>
+(function(){
+  try{
+    const savedTheme = localStorage.getItem("medicann-formulary-theme");
+    if(savedTheme === "light" || savedTheme === "dark"){
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+  }catch(error){}
+})();
+</script>
+
 
 <style>
 :root{
@@ -120,7 +131,7 @@ body{
 
 .search-row{
   display:grid;
-  grid-template-columns:minmax(240px,1fr) 150px 150px 150px 210px;
+  grid-template-columns:minmax(240px,1fr) 150px 150px 150px 210px 120px;
   gap:10px;
 }
 
@@ -831,12 +842,507 @@ input[type="search"]::-webkit-search-cancel-button:hover{
   }
 }
 
+
+/* Mobile product pill overflow fix */
+@media(max-width:720px){
+  .board,
+  .card{
+    min-width:0;
+    max-width:100%;
+  }
+
+  .card{
+    overflow:hidden;
+  }
+
+  .card-product-pills{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    white-space:nowrap;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    padding-bottom:4px;
+  }
+
+  .card-product-pills::-webkit-scrollbar{
+    display:none;
+  }
+
+  .card-product-pills .badge{
+    flex:0 0 auto;
+  }
+}
+
+
+/* Dark / light theme toggle */
+:root{
+  color-scheme:dark;
+}
+
+html[data-theme="light"]{
+  color-scheme:light;
+  --bg:#f3f6fb;
+  --panel:#ffffff;
+  --panel-2:#edf3f8;
+  --border:#d4deea;
+  --text:#111827;
+  --muted:#62748a;
+  --green:#16833d;
+  --green-soft:rgba(22,131,61,.14);
+  --amber:#9a6500;
+  --shadow:0 14px 34px rgba(15,23,42,.10);
+}
+
+.header-inner{
+  position:relative;
+}
+
+.theme-toggle{
+  position:absolute;
+  top:14px;
+  right:18px;
+  z-index:3;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-width:78px;
+  min-height:34px;
+  border:1px solid rgba(85,255,138,.34);
+  border-radius:999px;
+  padding:7px 11px;
+  background:rgba(85,255,138,.11);
+  color:var(--green);
+  cursor:pointer;
+  font-size:12px;
+  font-weight:850;
+  line-height:1;
+  box-shadow:0 0 0 3px rgba(85,255,138,.045);
+  transition:border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.theme-toggle:hover{
+  border-color:rgba(85,255,138,.62);
+  background:rgba(85,255,138,.17);
+  transform:translateY(-1px);
+}
+
+.theme-toggle:focus{
+  outline:2px solid rgba(85,255,138,.55);
+  outline-offset:3px;
+}
+
+.theme-toggle-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:15px;
+  font-size:13px;
+  line-height:1;
+}
+
+html[data-theme="light"] body{
+  background:
+    radial-gradient(circle at top left,rgba(22,131,61,.08),transparent 32%),
+    radial-gradient(circle at top right,rgba(37,99,235,.08),transparent 28%),
+    var(--bg);
+}
+
+html[data-theme="light"] .header{
+  background:rgba(248,250,252,.94);
+}
+
+html[data-theme="light"] .theme-toggle{
+  border-color:rgba(17,24,39,.14);
+  background:rgba(17,24,39,.055);
+  color:#111827;
+  box-shadow:0 0 0 3px rgba(17,24,39,.035);
+}
+
+html[data-theme="light"] .theme-toggle:hover{
+  border-color:rgba(22,131,61,.36);
+  background:rgba(22,131,61,.09);
+}
+
+html[data-theme="light"] .text-logo{
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.34),
+    0 0 10px rgba(24,122,46,.18),
+    0 0 20px rgba(24,122,46,.10);
+}
+
+html[data-theme="light"] .brand-green,
+html[data-theme="light"] .brand-formulary{
+  color:#f8fff8;
+  -webkit-text-stroke:1px rgba(17,111,47,.96);
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.34),
+    0 0 8px rgba(24,122,46,.22),
+    0 0 18px rgba(24,122,46,.13);
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] .nav-tab,
+html[data-theme="light"] .small-btn,
+html[data-theme="light"] .small-btn.green,
+html[data-theme="light"] .close{
+  background:var(--panel-2);
+  color:var(--text);
+}
+
+html[data-theme="light"] input::placeholder{
+  color:#76869a;
+}
+
+html[data-theme="light"] .search-box span,
+html[data-theme="light"] .status-bar,
+html[data-theme="light"] .brand,
+html[data-theme="light"] .label{
+  color:var(--muted);
+}
+
+html[data-theme="light"] .nav-tab{
+  color:#334155;
+}
+
+html[data-theme="light"] .nav-tab:hover{
+  color:#0f172a;
+}
+
+html[data-theme="light"] .nav-tab.active{
+  background:var(--green);
+  color:#f8fff8;
+}
+
+html[data-theme="light"] .nav-hide-button.is-collapsed{
+  background:rgba(22,131,61,.10);
+  color:var(--green);
+}
+
+html[data-theme="light"] .card{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.58)),
+    var(--panel);
+  box-shadow:0 10px 26px rgba(15,23,42,.06);
+}
+
+html[data-theme="light"] .card::before{
+  background:radial-gradient(circle at top right,rgba(22,131,61,.075),transparent 44%);
+}
+
+html[data-theme="light"] .card:hover{
+  border-color:rgba(22,131,61,.42);
+  box-shadow:0 13px 30px rgba(15,23,42,.10);
+}
+
+html[data-theme="light"] .product,
+html[data-theme="light"] .value,
+html[data-theme="light"] .drawer-header h2,
+html[data-theme="light"] .cannabinoid-bar-label,
+html[data-theme="light"] .cannabinoid-bar-value{
+  color:var(--text);
+}
+
+html[data-theme="light"] .badge{
+  background:rgba(15,23,42,.035);
+}
+
+html[data-theme="light"] .badge.stock-pill.stock-in,
+html[data-theme="light"] .badge.new-pill{
+  color:#13753b;
+  background:rgba(22,163,74,.10);
+  border-color:rgba(22,163,74,.28);
+}
+
+html[data-theme="light"] .badge.stock-pill.stock-low,
+html[data-theme="light"] .badge.irr{
+  color:#925f00;
+  background:rgba(245,158,11,.12);
+  border-color:rgba(245,158,11,.32);
+}
+
+html[data-theme="light"] .badge.stock-pill.stock-out{
+  color:#b42318;
+  background:rgba(239,68,68,.10);
+  border-color:rgba(239,68,68,.28);
+}
+
+html[data-theme="light"] .badge.product-format-pill{
+  color:#03627d;
+  background:rgba(14,165,233,.10);
+  border-color:rgba(14,165,233,.30);
+}
+
+html[data-theme="light"] .badge.carrier-oil-pill{
+  color:#6d28d9;
+  background:rgba(124,58,237,.10);
+  border-color:rgba(124,58,237,.28);
+}
+
+html[data-theme="light"] .badge.discounted{
+  color:#8a5a00;
+  background:rgba(234,179,8,.13);
+  border-color:rgba(202,138,4,.30);
+}
+
+html[data-theme="light"] .badge.group.indica{
+  color:#1d4ed8;
+  background:rgba(37,99,235,.10);
+  border-color:rgba(37,99,235,.28);
+}
+
+html[data-theme="light"] .badge.group.sativa{
+  color:#b45309;
+  background:rgba(245,158,11,.11);
+  border-color:rgba(245,158,11,.30);
+}
+
+html[data-theme="light"] .badge.group.hybrid{
+  color:#be185d;
+  background:rgba(219,39,119,.10);
+  border-color:rgba(219,39,119,.28);
+}
+
+html[data-theme="light"] .badge.group.balanced,
+html[data-theme="light"] .badge.group.other,
+html[data-theme="light"] .badge.stock-pill.stock-unknown{
+  color:#475569;
+  background:rgba(100,116,139,.10);
+  border-color:rgba(100,116,139,.24);
+}
+
+html[data-theme="light"] .cannabinoid-bar-track{
+  border-color:rgba(15,23,42,.07);
+  background:rgba(15,23,42,.08);
+}
+
+html[data-theme="light"] .meta-item,
+html[data-theme="light"] .drawer-field{
+  border-color:var(--border);
+  background:rgba(255,255,255,.82);
+}
+
+html[data-theme="light"] .small-btn:hover,
+html[data-theme="light"] .small-btn.green:hover{
+  border-color:rgba(22,131,61,.32);
+  background:rgba(22,131,61,.08);
+  color:var(--text);
+}
+
+html[data-theme="light"] .empty{
+  background:rgba(255,255,255,.55);
+}
+
+html[data-theme="light"] .drawer-backdrop{
+  background:rgba(15,23,42,.34);
+}
+
+html[data-theme="light"] .drawer{
+  background:var(--panel);
+  box-shadow:-20px 0 60px rgba(15,23,42,.18);
+}
+
+html[data-theme="light"] .drawer-body > .cannabinoid-bars{
+  border-color:var(--border);
+  background:rgba(237,243,248,.82);
+}
+
+html[data-theme="light"] .drawer-link{
+  color:var(--green);
+}
+
+@media(max-width:720px){
+  .theme-toggle{
+    top:10px;
+    right:10px;
+    min-width:34px;
+    width:34px;
+    min-height:30px;
+    padding:0;
+    border-radius:10px;
+  }
+
+  .theme-toggle-text{
+    display:none;
+  }
+
+  .theme-toggle-icon{
+    width:auto;
+    font-size:14px;
+  }
+}
+
+
+/* Favourites and reset filters */
+.reset-filters-btn{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:10px 12px;
+  background:var(--panel-2);
+  color:var(--text);
+  cursor:pointer;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.2;
+  white-space:nowrap;
+  transition:border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease;
+}
+
+.reset-filters-btn:hover{
+  border-color:rgba(85,255,138,.55);
+  background:rgba(85,255,138,.08);
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+.reset-filters-btn:focus,
+.favourite-btn:focus{
+  outline:2px solid rgba(85,255,138,.55);
+  outline-offset:3px;
+}
+
+.favourites-tab{
+  gap:7px;
+}
+
+.favourites-count{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:20px;
+  height:20px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:999px;
+  padding:0 6px;
+  background:rgba(255,255,255,.08);
+  color:inherit;
+  font-size:11px;
+  font-weight:850;
+  line-height:1;
+}
+
+.favourites-tab.active{
+  border-color:rgba(255,200,87,.72);
+  background:rgba(255,200,87,.16);
+  color:#ffd86f;
+}
+
+.favourites-tab.active .favourites-count{
+  border-color:rgba(255,200,87,.42);
+  background:rgba(255,200,87,.18);
+}
+
+.card-top .brand{
+  min-width:0;
+}
+
+.favourite-btn{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:31px;
+  height:31px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(255,255,255,.045);
+  color:var(--muted);
+  cursor:pointer;
+  font-size:16px;
+  font-weight:900;
+  line-height:1;
+  transition:border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.favourite-btn:hover{
+  border-color:rgba(255,200,87,.46);
+  color:#ffd86f;
+  transform:translateY(-1px);
+}
+
+.favourite-btn.active{
+  border-color:rgba(255,200,87,.58);
+  background:rgba(255,200,87,.15);
+  color:#ffd86f;
+  box-shadow:0 0 0 3px rgba(255,200,87,.055);
+}
+
+html[data-theme="light"] .reset-filters-btn{
+  background:var(--panel-2);
+  color:var(--text);
+}
+
+html[data-theme="light"] .reset-filters-btn:hover{
+  border-color:rgba(22,131,61,.32);
+  background:rgba(22,131,61,.08);
+  color:var(--text);
+}
+
+html[data-theme="light"] .favourites-count{
+  border-color:rgba(15,23,42,.10);
+  background:rgba(15,23,42,.055);
+}
+
+html[data-theme="light"] .favourites-tab.active{
+  border-color:rgba(202,138,4,.42);
+  background:rgba(234,179,8,.14);
+  color:#8a5a00;
+}
+
+html[data-theme="light"] .favourite-btn{
+  background:rgba(15,23,42,.035);
+  color:#7a8797;
+}
+
+html[data-theme="light"] .favourite-btn:hover,
+html[data-theme="light"] .favourite-btn.active{
+  border-color:rgba(202,138,4,.38);
+  background:rgba(234,179,8,.14);
+  color:#8a5a00;
+}
+
+@media(max-width:720px){
+  .reset-filters-btn{
+    min-height:42px;
+  }
+
+  .favourites-tab{
+    padding-right:9px;
+  }
+
+  .favourites-count{
+    min-width:18px;
+    height:18px;
+    padding:0 5px;
+    font-size:10px;
+  }
+
+  .favourite-btn{
+    width:30px;
+    height:30px;
+    font-size:15px;
+  }
+}
+
 </style>
 </head>
 
 <body>
 <header class="header">
   <div class="header-inner">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" title="Switch to light theme" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true">☀</span>
+      <span class="theme-toggle-text">Light</span>
+    </button>
+
     <div class="logo-wrap">
       <div class="text-logo">
         <span class="brand-green">TheGreenAvenger</span>
@@ -884,6 +1390,8 @@ input[type="search"]::-webkit-search-cancel-button:hover{
         <input id="maxThcInput" type="range" min="0" max="100" value="100" step="1">
         <span id="maxThcValue">100%</span>
       </div>
+
+      <button class="reset-filters-btn" id="resetFilters" type="button">Reset filters</button>
     </div>
   </div>
 </header>
@@ -896,6 +1404,7 @@ input[type="search"]::-webkit-search-cancel-button:hover{
     <button class="nav-tab" type="button" data-format="Extracts">Extracts</button>
     <button class="nav-tab" type="button" data-format="Pastilles">Pastilles</button>
     <button class="nav-tab" type="button" data-format="Internal">Internal</button>
+    <button class="nav-tab favourites-tab" id="favouritesToggle" type="button" aria-label="Show favourites" aria-pressed="false" title="Show favourites">★ Favourites <span class="favourites-count" id="favouritesCount">0</span></button>
     <button class="nav-tab nav-hide-button" id="hideHeaderSection" type="button" aria-label="Hide filters" aria-expanded="true">Hide Filters</button>
   </div>
 </nav>
@@ -929,6 +1438,7 @@ input[type="search"]::-webkit-search-cancel-button:hover{
 <script>
 let products = [];
 let currentFormat = "Flower";
+let showFavouritesOnly = false;
 
 const fallbackProducts = [
   {
@@ -984,8 +1494,119 @@ const drawerTitle = document.getElementById("drawerTitle");
 const backToTop = document.getElementById("backToTop");
 const headerSection = document.querySelector(".header");
 const hideHeaderSection = document.getElementById("hideHeaderSection");
+const favouritesToggle = document.getElementById("favouritesToggle");
+const favouritesCount = document.getElementById("favouritesCount");
+const resetFilters = document.getElementById("resetFilters");
+const themeToggle = document.getElementById("themeToggle");
+const themeStorageKey = "medicann-formulary-theme";
+const favouritesStorageKey = "medicann-formulary-favourites";
+let favouriteKeys = new Set(loadFavouriteKeys());
 
 stockSelect.value = "Available";
+
+
+function getActiveTheme(){
+  return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+}
+
+function updateThemeToggle(){
+  if(!themeToggle) return;
+
+  const activeTheme = getActiveTheme();
+  const nextTheme = activeTheme === "light" ? "dark" : "light";
+  const icon = themeToggle.querySelector(".theme-toggle-icon");
+  const text = themeToggle.querySelector(".theme-toggle-text");
+
+  if(icon) icon.textContent = activeTheme === "light" ? "☾" : "☀";
+  if(text) text.textContent = nextTheme === "light" ? "Light" : "Dark";
+
+  themeToggle.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
+  themeToggle.setAttribute("title", `Switch to ${nextTheme} theme`);
+  themeToggle.setAttribute("aria-pressed", activeTheme === "light" ? "true" : "false");
+}
+
+function setTheme(theme, persist = true){
+  const safeTheme = theme === "light" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", safeTheme);
+
+  if(persist){
+    try{
+      localStorage.setItem(themeStorageKey, safeTheme);
+    }catch(error){}
+  }
+
+  updateThemeToggle();
+}
+
+
+function loadFavouriteKeys(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(favouritesStorageKey) || "[]");
+    return Array.isArray(saved) ? saved.filter(Boolean) : [];
+  }catch(error){
+    return [];
+  }
+}
+
+function saveFavouriteKeys(){
+  try{
+    localStorage.setItem(favouritesStorageKey, JSON.stringify([...favouriteKeys]));
+  }catch(error){}
+}
+
+function productKey(product){
+  return [
+    product.brand,
+    product.cultivator,
+    product.product,
+    product.format,
+    product.pack,
+    product.thc,
+    product.cbd,
+    product.price
+  ]
+    .map(value => String(value || "").trim().toLowerCase())
+    .join("|");
+}
+
+function isFavourite(product){
+  return favouriteKeys.has(productKey(product));
+}
+
+function favouriteCount(){
+  return products.filter(product => isFavourite(product)).length;
+}
+
+function updateNavTabs(){
+  document.querySelectorAll("[data-format]").forEach(item => {
+    item.classList.toggle("active", !showFavouritesOnly && item.dataset.format === currentFormat);
+  });
+
+  if(favouritesToggle){
+    favouritesToggle.classList.toggle("active", showFavouritesOnly);
+    favouritesToggle.setAttribute("aria-pressed", showFavouritesOnly ? "true" : "false");
+    favouritesToggle.setAttribute("aria-label", showFavouritesOnly ? "Hide favourites" : "Show favourites");
+    favouritesToggle.setAttribute("title", showFavouritesOnly ? "Hide favourites" : "Show favourites");
+  }
+}
+
+function updateFavouritesUi(){
+  if(favouritesCount) favouritesCount.textContent = String(favouriteCount());
+  updateNavTabs();
+}
+
+function toggleFavourite(product){
+  const key = productKey(product);
+
+  if(favouriteKeys.has(key)){
+    favouriteKeys.delete(key);
+  } else {
+    favouriteKeys.add(key);
+  }
+
+  saveFavouriteKeys();
+  render();
+}
 
 function escapeHtml(value){
   return String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -1291,9 +1912,11 @@ function isInternalFormat(format){
 
 function updateSortOptionsForFormat(){
   const currentValue = sortSelect.value;
-  const options = isVapesFormat(currentFormat)
-    ? vapeSortOptions
-    : isOilsFormat(currentFormat)
+  const options = showFavouritesOnly
+    ? standardSortOptions
+    : isVapesFormat(currentFormat)
+      ? vapeSortOptions
+      : isOilsFormat(currentFormat)
       ? oilsSortOptions
       : isExtractsFormat(currentFormat)
         ? extractsSortOptions
@@ -1361,7 +1984,7 @@ function maxThcLimitForFormat(format){
 }
 
 function updateMaxThcSliderForFormat(options = {}){
-  const max = maxThcLimitForFormat(currentFormat);
+  const max = showFavouritesOnly ? 1000 : maxThcLimitForFormat(currentFormat);
   const reset = Boolean(options.reset);
 
   maxThcInput.max = String(max);
@@ -1385,7 +2008,7 @@ function getFilteredProducts(){
       const productFormat = String(product.format || "Flower").trim().toLowerCase();
       const productStock = String(product.stock || "").toLowerCase();
 
-      return productFormat === currentFormat.toLowerCase()
+      return (showFavouritesOnly ? isFavourite(product) : productFormat === currentFormat.toLowerCase())
         && (!query || searchable(product).includes(query))
         && (!group
           || (group === "__new" && hasNew(product.isNew))
@@ -1418,12 +2041,14 @@ function productCard(product, index){
   const medbudButton = product.medbud
     ? `<a class="small-btn" href="${escapeHtml(product.medbud)}" target="_blank" rel="noopener">MedBud Database</a>`
     : `<button class="small-btn" type="button" data-details="${index}">MedBud Database</button>`;
+  const savedFavourite = isFavourite(product);
 
   return `
     <article class="card">
       <div class="card-main">
         <div class="card-top">
           <div class="brand">${escapeHtml(product.brand || "Unknown Brand")}</div>
+          <button class="favourite-btn ${savedFavourite ? "active" : ""}" type="button" data-favourite="${index}" aria-label="${savedFavourite ? "Remove from favourites" : "Add to favourites"}" title="${savedFavourite ? "Remove from favourites" : "Add to favourites"}" aria-pressed="${savedFavourite ? "true" : "false"}">★</button>
         </div>
 
         <div class="product">${escapeHtml(product.product || "Unnamed Product")}</div>
@@ -1496,13 +2121,44 @@ function render(){
   board.innerHTML = filtered.map(product => productCard(product, products.indexOf(product))).join("");
   emptyState.style.display = filtered.length ? "none" : "block";
 
-  if(!resultCount.textContent.includes("demo products")){
-    resultCount.textContent = `${currentFormat}: showing ${filtered.length} of ${products.length} products`;
+  if(showFavouritesOnly){
+    emptyState.textContent = favouriteCount()
+      ? "No favourite products match the current search or filters."
+      : "No favourites saved yet. Tap the star on a product card to save it here.";
+  } else {
+    emptyState.textContent = "No products found on this page. Try another section, clear the search and change the filters.";
   }
+
+  if(!resultCount.textContent.includes("demo products")){
+    resultCount.textContent = showFavouritesOnly
+      ? `Favourites: showing ${filtered.length} of ${favouriteCount()} saved products`
+      : `${currentFormat}: showing ${filtered.length} of ${products.length} products`;
+  }
+
+  updateFavouritesUi();
 
   document.querySelectorAll("[data-details]").forEach(button => {
     button.addEventListener("click", () => openDrawer(products[Number(button.dataset.details)]));
   });
+
+  document.querySelectorAll("[data-favourite]").forEach(button => {
+    button.addEventListener("click", () => {
+      toggleFavourite(products[Number(button.dataset.favourite)]);
+    });
+  });
+}
+
+
+function resetAllFilters(){
+  searchInput.value = "";
+  groupSelect.value = "";
+  stockSelect.value = "Available";
+  showFavouritesOnly = false;
+
+  updateSortOptionsForFormat();
+  sortSelect.value = "brand";
+  updateMaxThcSliderForFormat({reset:true});
+  render();
 }
 
 function openDrawer(product){
@@ -1572,6 +2228,32 @@ function setFiltersHidden(hidden){
   hideHeaderSection.setAttribute("aria-expanded", hidden ? "false" : "true");
 }
 
+
+if(themeToggle){
+  updateThemeToggle();
+
+  themeToggle.addEventListener("click", () => {
+    setTheme(getActiveTheme() === "light" ? "dark" : "light");
+  });
+}
+
+
+if(favouritesToggle){
+  favouritesToggle.addEventListener("click", () => {
+    showFavouritesOnly = !showFavouritesOnly;
+    updateSortOptionsForFormat();
+    if(!Array.from(sortSelect.options).some(option => option.value === sortSelect.value)){
+      sortSelect.value = "brand";
+    }
+    updateMaxThcSliderForFormat({reset:true});
+    render();
+  });
+}
+
+if(resetFilters){
+  resetFilters.addEventListener("click", resetAllFilters);
+}
+
 document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
 drawerBackdrop.addEventListener("click", closeDrawer);
 
@@ -1596,11 +2278,9 @@ maxThcInput.addEventListener("input", () => {
 document.querySelectorAll("[data-format]").forEach(tab => {
   tab.addEventListener("click", () => {
     currentFormat = tab.dataset.format;
+    showFavouritesOnly = false;
 
-    document.querySelectorAll("[data-format]").forEach(item => {
-      item.classList.toggle("active", item.dataset.format === currentFormat);
-    });
-
+    updateNavTabs();
     searchInput.value = "";
     updateMaxThcSliderForFormat({reset:true});
     render();
@@ -1620,6 +2300,7 @@ hideHeaderSection.addEventListener("click", () => {
 toggleBackToTop();
 updateMaxThcSliderForFormat({reset:true});
 updateSortOptionsForFormat();
+updateFavouritesUi();
 loadCsv();
 </script>
 </body>
